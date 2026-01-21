@@ -1,10 +1,25 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [gypsyMessage, setGypsyMessage] = useState('')
+
+  useEffect(()=>{
+    (async function(){
+      try {
+        const gotGypsyMessageJson = await fetch('https://gypsy.ro')
+        console.log('gotGypsyMessageJson', gotGypsyMessageJson)
+        const gotGypsyMessage = await gotGypsyMessageJson.json()
+        console.log('gotGypsyMessage', gotGypsyMessage)
+        setGypsyMessage(gotGypsyMessage)
+      } catch (error) {
+        console.warn(error)
+      }
+    })()
+  }, [])
 
   const handleLatLongClick = async (e) => {
     if (navigator.geolocation) {
