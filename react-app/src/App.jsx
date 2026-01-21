@@ -8,7 +8,7 @@ function App() {
   const [gypsyMessage, setGypsyMessage] = useState({message: ''})
 
   useEffect(()=>{
-    (async function(){
+    (async ()=>{
       try {
         const gotGypsyMessageJson = await fetch('https://geolocation-backend.vercel.app/hello')
         console.log('gotGypsyMessageJson', gotGypsyMessageJson)
