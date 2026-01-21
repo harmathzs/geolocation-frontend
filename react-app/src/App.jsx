@@ -49,6 +49,10 @@ function App() {
           </ol>
         </p>
       </div>
+
+      <div className='card'>
+        <p>Gypsy message: {gypsyMessage?.message}</p>
+      </div>
     </>
   )
 }
