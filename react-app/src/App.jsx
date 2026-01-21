@@ -1,33 +1,58 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [gypsyMessage, setGypsyMessage] = useState({message: ''})
+
+  useEffect(()=>{
+    (async ()=>{
+      try {
+        const gotGypsyMessageJson = await fetch('https://geolocation-backend.vercel.app/hello')
+        console.log('gotGypsyMessageJson', gotGypsyMessageJson)
+        const gotGypsyMessage = await gotGypsyMessageJson.json()
+        console.log('gotGypsyMessage', gotGypsyMessage)
+        setGypsyMessage(gotGypsyMessage)
+      } catch (error) {
+        console.warn(error)
+      }
+    })()
+  }, [])
+
+  const handleLatLongClick = async (e) => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async function success(position){
+            const {latitude, longitude} = position.coords /*
+            const gotDataJson = await fetch('https://xxx.vercel.app/geolocation&#39;, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({latitude, longitude})
+            }) */
+
+        }, console.warn)
+    }
+  }  
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1>Geolocation</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={handleLatLongClick}>
+          Store geolocation
         </button>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          <ol>
+            <li>Latitude: {"todo"}</li>
+            <li>Longitude: {"todo"}</li>
+          </ol>
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <div className='card'>
+        <p>Gypsy message: {gypsyMessage?.message}</p>
+      </div>
     </>
   )
 }
