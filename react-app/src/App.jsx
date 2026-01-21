@@ -5,7 +5,7 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-  const [gypsyMessage, setGypsyMessage] = useState({})
+  const [gypsyMessage, setGypsyMessage] = useState({message: ''})
 
   useEffect(()=>{
     (async function(){
