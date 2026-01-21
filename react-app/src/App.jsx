@@ -10,7 +10,7 @@ function App() {
   useEffect(()=>{
     (async function(){
       try {
-        const gotGypsyMessageJson = await fetch('https://gypsy.ro')
+        const gotGypsyMessageJson = await fetch('https://geolocation-backend.vercel.app/hello')
         console.log('gotGypsyMessageJson', gotGypsyMessageJson)
         const gotGypsyMessage = await gotGypsyMessageJson.json()
         console.log('gotGypsyMessage', gotGypsyMessage)
